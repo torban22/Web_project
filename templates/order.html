@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ data.name }}
+{% endblock %}
+
+{% block body %}
+<div class="container" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <h1>{{ data.name }} </h1>
+
+    <div >
+        <img src="C:\Developers\taa2009\PyCharm\Yandex_Lyceum\Job\WEB_Project\image\{{data.image}}">
+        <p><b>Характеристики: {{data.haracteristic}} </b></p>
+        <p><b>Страна производитель: {{data.countr.title}} </b></p>
+        {% if data.quantity > 0 %}
+           <p><b>Наличие: {{data.quantity}} </b></p>
+        {% else %}
+           <p><b>Наличие: Нет в наличии </b></p>
+        {% endif %}
+        <p><b>Цена: {{data.price}} </b></p>
+      <form method="post">
+          {% if data.quantity > 0 %}
+              <br><input type="number" class="form-control" name="quantity" id="quantity" placeholder="Количество" max="{{data.quantity}}" min="0"></br>
+              <br><input type="text" class="form-control" name="place" id="place" placeholder="Адрес доставки"></br>
+              <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/197/barnaul/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Барнаул</a><a href="https://yandex.ru/maps/197/barnaul/?ll={{ lon }}%2C{{ lat }}&utm_medium=mapframe&utm_source=maps&z=17" style="color:#eee;font-size:12px;position:absolute;top:14px;">Яндекс Карты</a><iframe src="https://yandex.ru/map-widget/v1/?ll={{ lon }}%2C{{lat}}&z=17" width="560" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
+              <button class="btn btn-success" type="submit">В корзину</button>
+          {% endif %}
+      </form>
+    {{message}}
+    </div>
+
+
+</div>
+
+{% endblock %}
