@@ -6,6 +6,7 @@ from data.country import Country
 from data.kategory import Kategory
 from data.reserve import Reserve
 from data.sign_up import Sign_up
+from forms.AdminLogForm import AdminLogForm
 from forms.LoginForm import LoginForm
 from forms.user import RegisterForm
 from flask_login import LoginManager, login_user, logout_user, login_required
@@ -192,7 +193,7 @@ def order(id):
                 db_sess.commit()
 
     else:
-        toponym_to_find = 'Барнаул, ул. А. Петрова, 247А'
+        toponym_to_find = 'Барнаул'
         db_session.global_init("db/site.db")
         db_sess = db_session.create_session()
         num = db_sess.query(Catalog).get(id)
@@ -252,11 +253,12 @@ def order(id):
     else:
         res = db_sess.query(Reserve).filter(Reserve.id_tov == int(id)).first()
         res.quantity += quant
-        db_sess.commit()'''
+        db_sess.commit()
+        <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/197/barnaul/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Барнаул</a><a href="https://yandex.ru/maps/197/barnaul/?ll={{ lon }}%2C{{ lat }}&utm_medium=mapframe&utm_source=maps&z=17" style="color:#eee;font-size:12px;position:absolute;top:14px;">Яндекс Карты</a><iframe src="https://yandex.ru/map-widget/v1/?ll={{ lon }}%2C{{lat}}&z=17" width="560" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>'''
 
 
 
-    return render_template('order.html', data=num, maps = ll, lon = k, lat = h)
+    return render_template('order.html', data=num, maps = ll, lon = k, lat = h, par=map_params)
 
 
 @app.route('/back/<int:id>')
@@ -281,12 +283,14 @@ def basket():
         if sear == '':
             db_session.global_init("db/site.db")
             db_sess = db_session.create_session()
-            reser = db_sess.query(Reserve).all()
+            us = flask_login.current_user
+            reser = db_sess.query(Reserve).filter(Reserve.user_id == us.id)
             return render_template('basket.html', data=reser)
         else:
             db_session.global_init("db/site.db")
             db_sess = db_session.create_session()
-            reser = db_sess.query(Reserve).join(Kategory).filter(Reserve.name.like(f'%{sear}%')).all()
+            us = flask_login.current_user
+            reser = db_sess.query(Reserve).join(Catalog).filter(Catalog.name.like(f'%{sear}%'), Reserve.user_id == us.id).all()
             return render_template('basket.html', data=reser)
 
 
@@ -298,7 +302,92 @@ def basket():
         return render_template('basket.html', data=reser)
 
 
+@app.route('/basket/<string:num>/')
+def basket_sort(num):
+    db_session.global_init("db/site.db")
+    db_sess = db_session.create_session()
+    us = flask_login.current_user
+    nm = db_sess.query(Reserve).join(Kategory).filter(Kategory.kategor == num, Reserve.user_id == us.id).all()
+    return render_template('basket_sort.html', data=nm)
 
+
+@app.route('/admin_login', methods=['GET', 'POST'])
+def admin_login():
+    form = AdminLogForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        user = db_sess.query(Sign_up).filter(Sign_up.email == form.email.data, Sign_up.name == 'Admin').first()
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember_me.data)
+            return redirect("/admin_index/")
+        return render_template('admin_login.html',
+                               message="Неправильный логин или пароль",
+                               form=form)
+    return render_template('admin_login.html', title='Авторизация', form=form)
+
+
+@app.route('/admin_index/', methods=['POST', 'GET'])
+def admin_index():
+    if request.method == 'POST':
+        sear = request.form.get('search')
+        if sear == '':
+            db_session.global_init("db/site.db")
+            db_sess = db_session.create_session()
+            catal = db_sess.query(Catalog).all()
+            return render_template('admin_index.html', data=catal)
+        else:
+            db_session.global_init("db/site.db")
+            db_sess = db_session.create_session()
+            catal = db_sess.query(Catalog).join(Kategory).filter(Catalog.name.like(f'%{sear}%')).all()
+            return render_template('admin_index.html', data=catal)
+
+
+    else:
+        db_session.global_init("db/site.db")
+        db_sess = db_session.create_session()
+        catal = db_sess.query(Catalog).all()
+        return render_template('admin_index.html', data = catal)
+
+
+@app.route('/admin_index/<int:id>')
+def admin_detail(id):
+    db_session.global_init("db/site.db")
+    db_sess = db_session.create_session()
+    num = db_sess.query(Catalog).get(id)
+
+    return render_template('admin_detail.html', data = num)
+
+@app.route('/admin_index/<string:num>/', methods=['POST', 'GET'])
+def admin_sort(num):
+    if request.method == 'POST':
+        sear = request.form.get('search')
+        if sear == '':
+            db_session.global_init("db/site.db")
+            db_sess = db_session.create_session()
+            nm = db_sess.query(Catalog).join(Kategory).filter(Kategory.kategor == num).all()
+            return render_template('admin_sort.html', data=nm)
+        else:
+            db_session.global_init("db/site.db")
+            db_sess = db_session.create_session()
+            catal = db_sess.query(Catalog).join(Kategory).filter(Catalog.name.like(f'%{sear}%'), Kategory.kategor == num).all()
+            return render_template('admin_sort.html', data=catal)
+    else:
+        db_session.global_init("db/site.db")
+        db_sess = db_session.create_session()
+        nm = db_sess.query(Catalog).join(Kategory).filter(Kategory.kategor == num).all()
+        return render_template('admin_sort.html', data=nm)
+
+
+
+@app.route('/admin_back/<int:id>')
+@login_required
+def admin_back(id):
+    db_session.global_init("db/site.db")
+    db_sess = db_session.create_session()
+    res = db_sess.query(Catalog).filter(Catalog.id == int(id)).first()
+    db_sess.delete(res)
+    db_sess.commit()
+    return redirect("/admin_index")
 
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')

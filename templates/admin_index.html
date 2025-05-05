@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_admin.html' %}
 
 {% block title %}
 <title xmlns="http://www.w3.org/1999/html">Онлайн магазин</title>
@@ -50,9 +50,9 @@
     <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
       <h1 class="display-4 fw-normal text-body-emphasis">Pricing</h1>
       <p class="fs-5 text-body-secondary">
-        <a href="/index/Серверы" class="btn btn-secondary">Серверы</a>
-        <a href="/index/Коммутаторы" class="btn btn-secondary">Коммутаторы</a>
-        <a href="/index/Роутеры" class="btn btn-secondary">Роутеры</a>
+        <a href="/admin_index/Серверы" class="btn btn-secondary">Серверы</a>
+        <a href="/admin_index/Коммутаторы" class="btn btn-secondary">Коммутаторы</a>
+        <a href="/admin_index/Роутеры" class="btn btn-secondary">Роутеры</a>
 
       </p>
       <form method="post">
@@ -86,7 +86,8 @@
 
             </ul>
 
-            <a href="/index/{{el.id}}" class="w-100 btn btn-lg btn-outline-primary">Подробнее</a>
+            <a href="/admin_index/{{el.id}}" class="w-100 btn btn-lg btn-outline-primary">Подробнее</a>
+            <a href="/admin_back/{{el.id}}" class="btn btn-warning">Удалить</a>
 
           </div>
         </div>

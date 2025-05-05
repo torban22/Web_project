@@ -22,7 +22,8 @@
           {% if data.quantity > 0 %}
               <br><input type="number" class="form-control" name="quantity" id="quantity" placeholder="Количество" max="{{data.quantity}}" min="0"></br>
               <br><input type="text" class="form-control" name="place" id="place" placeholder="Адрес доставки"></br>
-              <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/197/barnaul/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Барнаул</a><a href="https://yandex.ru/maps/197/barnaul/?ll={{ lon }}%2C{{ lat }}&utm_medium=mapframe&utm_source=maps&z=17" style="color:#eee;font-size:12px;position:absolute;top:14px;">Яндекс Карты</a><iframe src="https://yandex.ru/map-widget/v1/?ll={{ lon }}%2C{{lat}}&z=17" width="560" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
+
+              <iframe src="https://yandex.ru/map-widget/v1/?ll={{ lon }}%2C{{lat}}&z=17" width="686" height="400" frameborder="0"></iframe>
               <button class="btn btn-success" type="submit">В корзину</button>
           {% endif %}
       </form>
