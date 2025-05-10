@@ -5,20 +5,22 @@
 {% endblock %}
 
 {% block body %}
-<div class="container mt-5" xmlns="http://www.w3.org/1999/html">
+<div class="container mt-5" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+     xmlns="http://www.w3.org/1999/html">
     <h1>Добавление </h1>
 
     <div class="alert alert-info">
-        <form method="post">
-          <br><input type="text" class="form-control" name="name" id="name" placeholder="Название"></br>
+
+        <form action="/admin_add/" method="post" enctype="multipart/form-data">
+            <br><input type="text" class="form-control" name="name" id="name"  placeholder="Название"></br>
           <br><input type="text" class="form-control" name="kategory" id="kategory" placeholder="Категория"></br>
-          <br><input type="number" class="form-control" name="quantity" id="quantity" placeholder="Количество"></br>
-            <br><input type="number" class="form-control" name="price" id="price" placeholder="Цена"></br>
+          <br><input type="number" class="form-control" name="quantity" id="quantity" placeholder="Количество" min="0"></br>
+            <br><input type="number" class="form-control" name="price" id="price" placeholder="Цена" min="0"></br>
             <br><input type="text" class="form-control" name="country" id="country" placeholder="Страна производитель"></br>
             <br><input type="text" class="form-control" name="haracteristic" id="haracteristic" placeholder="Характеристика"></br>
-            <br><input type="file" class="form-control" name="image" id="image" placeholder="Загрузить изображение"></br>
-          <button class="btn btn-success" type="submit">Найти</button>
-      </form>
+          <br><input type="file" class="form-control" name="file"></br>
+          <br><input type="submit" class="btn btn-success" value="Отправить" class="form-control"></br>
+             </form>
 
         <div>{{ message }}</div>
     </div>

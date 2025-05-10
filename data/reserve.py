@@ -1,9 +1,8 @@
 import sqlalchemy
 from sqlalchemy import orm
 from sqlalchemy.orm import relationship
-
-from data.catalog import Catalog, Kategory
 from .db_session import SqlAlchemyBase
+
 
 class Reserve(SqlAlchemyBase):
     __tablename__ = 'reserve'
@@ -12,7 +11,8 @@ class Reserve(SqlAlchemyBase):
     quantity = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     price = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     kategory_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('kategory.id'))
-    address = sqlalchemy.Column(sqlalchemy.Text, nullable=False)
+    lon = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
+    lat = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     user_id = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     surname = sqlalchemy.Column(sqlalchemy.String, nullable=True)

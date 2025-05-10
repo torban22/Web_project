@@ -1,13 +1,6 @@
-from sqlalchemy import orm
 from sqlalchemy.orm import relationship
-
-from data.kategory import Kategory
-from data.country import Country
 import sqlalchemy
 from .db_session import SqlAlchemyBase
-
-
-
 
 
 class Catalog(SqlAlchemyBase):
@@ -25,19 +18,7 @@ class Catalog(SqlAlchemyBase):
     countr = relationship('Country', backref ='cat')
     kateg = relationship('Kategory', backref ='cat')
 
-
     def __repr__(self):
-        return f'{self.id} {self.name} {self.quantity} {self.price} {self.kategory_id}'
-
-'''def index(kategory_id=None):
-    db_session.global_init("db/site.db")
-    db_sess = db_session.create_session()
-    catal = db_sess.query(Catalog).all()
-    if kategory_id is None:
-        kat = db_sess.query(Catalog).all()
-    else:
-        kat = db_sess.query(Catalog).get(int(kategory_id))
-    return render_template('index.html', data = kat, kateg = kat)
-'''
+        return f'{self.id} {self.name} {self.quantity} {self.price} {self.kategory_id} {self.image}'
 
 

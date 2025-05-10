@@ -48,7 +48,7 @@
   <header>
 
     <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-      <h1 class="display-4 fw-normal text-body-emphasis">Pricing</h1>
+      <h1 class="display-4 fw-normal text-body-emphasis"></h1>
       <p class="fs-5 text-body-secondary">
         <a href="/basket/Серверы" class="btn btn-secondary">Серверы</a>
         <a href="/basket/Коммутаторы" class="btn btn-secondary">Коммутаторы</a>
@@ -77,18 +77,24 @@
 
 
           </div>
-          <img class="card-img-top" src="C:/Developers/taa2009/PyCharm/Yandex_Lyceum/Job/WEB_Project/image/{{el.tov_num.image}}">
+          <img class="card-img-top" src="../static/{{el.tov_num.image}}">
           <div class="card-body">
             <h1 class="card-title pricing-card-title"><small class="text-body-secondary fw-light"></small></h1>
             <ul class="list-unstyled mt-3 mb-4">
 
-              <li>Цена: {{el.price}} </li>
+              <li>Цена: {{el.price}} руб</li>
               <li>Количество: {{el.quantity}} </li>
+
 
             </ul>
 
             <a href="" class="w-100 btn btn-lg btn-outline-primary">Оплатить</a>
-            <a href="/back/{{el.id_tov}}" class="btn btn-warning">Удалить из корзины</a>
+
+              <form action="/back/{{el.id_tov}}" method="post">
+              <input type="submit" value="Удалить" onclick="return confirm('Точно удалить?')">
+              </form>
+
+
 
           </div>
         </div>

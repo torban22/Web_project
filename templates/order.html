@@ -9,7 +9,7 @@
     <h1>{{ data.name }} </h1>
 
     <div >
-        <img src="C:\Developers\taa2009\PyCharm\Yandex_Lyceum\Job\WEB_Project\image\{{data.image}}">
+        <img src="/static/{{ data.image }}">
         <p><b>Характеристики: {{data.haracteristic}} </b></p>
         <p><b>Страна производитель: {{data.countr.title}} </b></p>
         {% if data.quantity > 0 %}
@@ -17,17 +17,20 @@
         {% else %}
            <p><b>Наличие: Нет в наличии </b></p>
         {% endif %}
-        <p><b>Цена: {{data.price}} </b></p>
+        <p><b>Цена: {{data.price}} руб</b></p>
+        {{message}}
       <form method="post">
           {% if data.quantity > 0 %}
               <br><input type="number" class="form-control" name="quantity" id="quantity" placeholder="Количество" max="{{data.quantity}}" min="0"></br>
-              <br><input type="text" class="form-control" name="place" id="place" placeholder="Адрес доставки"></br>
 
-              <iframe src="https://yandex.ru/map-widget/v1/?ll={{ lon }}%2C{{lat}}&z=17" width="686" height="400" frameborder="0"></iframe>
+              <br>Вид Адреса: Город, Улица номер дома<input type="text" class="form-control" name="place" id="place" placeholder="Адрес доставки"></br>
+
+
+              <iframe src="https://yandex.ru/map-widget/v1/?ll={{ lon }}%2C{{lat}}&z=17&pt={{lon}},{{lat}}~{{lon}},{{lat}},78~{{lon}},{{lat}},pmgrs~{{lon}},{{lat}},round&apikey=dda3ddba-c9ea-4ead-9010-f43fbc15c6e3" width="686" height="400" frameborder="0"></iframe>
               <button class="btn btn-success" type="submit">В корзину</button>
           {% endif %}
       </form>
-    {{message}}
+
     </div>
 
 

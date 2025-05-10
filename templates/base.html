@@ -34,7 +34,10 @@
         <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/">Главная</a>
 
        {% if current_user.is_authenticated %}
-          <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+
+          <form action="/logout" method="post">
+              <input class="navbar-brand" type="submit" value="{{ current_user.name }}" onclick="return confirm('Выйти из аккаунта?')">
+          </form>
           <a class="py-2 link-body-emphasis text-decoration-none" href="/basket">Корзина</a>
 {% else %}
     <p>

@@ -9,7 +9,7 @@
     <h1>{{ data.name }} </h1>
 
     <div class="alert alert-info">
-        <img src="C:\Developers\taa2009\PyCharm\Yandex_Lyceum\Job\WEB_Project\image\{{data.image}}">
+        <img src="../static/{{ data.image }}">
         <p><b>Характеристики: {{data.haracteristic}} </b></p>
         <p><b>Страна производитель: {{data.countr.title}} </b></p>
         {% if data.quantity > 0 %}
@@ -17,7 +17,7 @@
         {% else %}
             <p><b>Наличие: Нет в наличии </b></p>
         {% endif %}
-        <p><b>Цена: {{data.price}} </b></p>
+        <p><b>Цена: {{data.price}} руб</b></p>
         {% if current_user.is_authenticated and data.quantity > 0 %}
            <a class="w-100 btn btn-lg btn-outline-primary" href="/order/{{data.id}}">В корзину</a>
 

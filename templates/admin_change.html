@@ -1,0 +1,31 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <h1>Изменение </h1>
+
+    <div class="alert alert-info">
+
+        <form action="/admin_change/{{ data.id }}" method="post" enctype="multipart/form-data">
+            <br><input type="text" class="form-control" name="name" id="name" value="{{ data.name }}" placeholder="Название"></br>
+          <br><input type="text" class="form-control" name="kategory" id="kategory" value="{{ data.kateg.kategor }}" placeholder="Категория"></br>
+          <br><input type="number" class="form-control" name="quantity" id="quantity" value="{{ data.quantity }}" placeholder="Количество" min="0"></br>
+          <br><input type="text" class="form-control" name="price" id="price" value="{{ data.price }}" placeholder="Цена" min="0"></br>
+          <br><input type="text" class="form-control" name="country" id="country" value="{{ data.countr.title }}" placeholder="Страна производитель"></br>
+          <br><input type="text" class="form-control" name="haracteristic" id="haracteristic" value="{{ data.haracteristic }}" placeholder="Характеристика"></br>
+            <img src="../static/{{data.image}}" width=”100px>
+          <br><input type="file" class="form-control" name="file" value="/static/{{ data.image }}" placeholder="/static/{{ data.image }}"></br>
+          <br><input type="submit" class="btn btn-success" value="Изменить" class="form-control"></br>
+             </form>
+
+        <div>{{ message }}</div>
+    </div>
+
+
+</div>
+
+{% endblock %}

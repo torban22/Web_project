@@ -33,9 +33,9 @@
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
 
 
-       {% if current_user.is_authenticated %}
+       {% if current_user.name == 'Admin' %}
           <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="/admin_index">Главная</a>
-          <a class="py-2 link-body-emphasis text-decoration-none" href="/admin_add">Добавить</a>
+          <a class="py-2 link-body-emphasis text-decoration-none" href="/admin_add/">Добавить</a>
 
 {% endif %}
 
