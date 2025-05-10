@@ -406,6 +406,5 @@ def admin_change(id):
         num = db_sess.query(Catalog).filter(Catalog.id == int(id)).first()
         return render_template('admin_change.html', data=num, message='')
 
-
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
