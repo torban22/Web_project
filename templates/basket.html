@@ -36,10 +36,11 @@
 
 
 
-{%for el in data  %}
+
 <div class="container py-3">
   <main>
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        {%for el in data  %}
       <div class="col">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
@@ -58,7 +59,7 @@
 
             </ul>
 
-            <a href="" class="w-100 btn btn-lg btn-outline-primary">Оплатить</a>
+            <a href="/pay/{{el.id_tov}}" class="w-100 btn btn-lg btn-outline-primary">Оплатить</a>
 
               <form action="/back/{{el.id_tov}}" method="post">
               <input type="submit" value="Удалить" onclick="return confirm('Точно удалить?')">
@@ -69,11 +70,12 @@
           </div>
         </div>
       </div>
+        {% endfor %}
     </div>
   </main>
 </div>
  </ul>
 </div>
 
-{% endfor %}
+
 {% endblock %}

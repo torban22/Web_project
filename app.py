@@ -230,6 +230,16 @@ def basket_sort(num):
     nm = db_sess.query(Reserve).join(Kategory).filter(Kategory.kategor == num, Reserve.user_id == us.id).all()
     return render_template('basket_sort.html', data=nm)
 
+@app.route('/pay/<int:id>', methods=['POST', 'GET'])
+def pay(id):
+    db_session.global_init("db/site.db")
+    db_sess = db_session.create_session()
+    us = flask_login.current_user
+    res = db_sess.query(Reserve).filter(Reserve.id_tov == int(id), Reserve.user_id == int(us.id)).first()
+    db_sess.delete(res)
+    db_sess.commit()
+    return render_template('succes.html')
+
 @app.route('/admin_login', methods=['GET', 'POST'])
 def admin_login():
     form = AdminLogForm()
